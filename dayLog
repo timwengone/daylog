@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>dayLog</title>
+        </head>
+    </head>
+    <body>
+        <textarea id="content_string" style="width: 400px;height: 100px;"></textarea>
+        <div id="list_content">
+        </div>
+        <script>
+            let listContent = localStorage.getItem('listContent')?JSON.parse(localStorage.getItem('listContent')):[];
+            let listString = ''
+            listContent.forEach(item=>{
+                listString += '<p>'+item+'</p>';
+            })
+            document.getElementById('list_content').innerHTML = listString
+            document.getElementById('content_string').addEventListener('keyup',function(e){
+                if(e.key === 'Enter'){
+                    let nowDate =  new Date().toLocaleString();
+                    listContent.unshift(nowDate+' '+document.getElementById('content_string').value);
+                    localStorage.setItem('listContent',JSON.stringify(listContent))
+                    listString = ''
+                    listContent.forEach(item=>{
+                        listString += '<p>'+item+'</p>';
+                    })
+                    document.getElementById('list_content').innerHTML = listString
+                }
+            })
+        </script>
+    </body>
+</html>
